@@ -11,16 +11,22 @@
 </head>
 <body class="demo">
     <ul class="rotatex">
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
+        <li style="--start-angle: 0deg;"><span>Test</span></li>
+        <li style="--start-angle: 60deg;"><span>Test</span></li>
+        <li style="--start-angle: 120deg;"><span>Test</span></li>
+        <li style="--start-angle: 180deg;"><span>Test</span></li>
+        <li style="--start-angle: 240deg;"><span>Test</span></li>
+        <li style="--start-angle: 300deg;"><span>Test</span></li>
     </ul>
 
     <script>
-        let rx = new Rotatex();
-        // console.log(window.aaabbb);
+        // let rx = new Rotatex();
+        let r = document.getElementsByClassName('rotatex2')[0];
+        rotatex.on(r);
+
+        // let li = document.createElement('li');
+        // r.append(li);
+        // console.log(rotatex);
     </script>
 </body>
 </html>

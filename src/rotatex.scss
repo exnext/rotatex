@@ -20,7 +20,71 @@
     }
 }
 
-.rotatex, [data-rotatex] {
+
+ul.rotatex {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; 
+}
+
+.rotatex {
+    position: relative;
+    // ul#{&} {
+    //     list-style-type: none;
+    //     padding: 0;
+    //     margin: 0; 
+    // }
+
+    & > * {
+        --start-angle: 0deg;
+
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+    
+        & > * {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+        }
+    
+        @include rotate(0deg);
+    
+        $index: 0;
+        @while $index <= 360 {
+            &.r-#{$index} {
+                @include rotate(#{$index}deg);
+            }
+
+            //exclude
+            // &:first-child:nth-last-child(#{$index}),
+            // &:first-child:nth-last-child(#{$index}) ~ & {
+            //     width: 25%;
+            // }
+            
+            $index: $index + 1;
+        }
+    
+        &.off {
+            @include rotate(0deg);
+        }
+    
+        &.debug {
+            border: 1px solid red;
+        }
+    }
+}
+
+li1:first-child:nth-last-child(4),
+li1:first-child:nth-last-child(4) ~ li1 {
+    width: 25%;
+}
+
+.rotatex2, [data-rotatex] {
     --start-angle: 0deg;
 
     position: absolute;
