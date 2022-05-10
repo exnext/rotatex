@@ -2,7 +2,10 @@
   "name": "rotatex",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/annihilation.js",
+  "files": [
+    "dist/"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.13.15",
