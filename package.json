@@ -1,12 +1,11 @@
 {
-  "name": "rotatex",
+  "name": "@exnext/rotatex",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/annihilation.js",
+  "main": "dist/rotatex.js",
   "files": [
     "dist/"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.13.15",
     "@babel/plugin-transform-modules-umd": "^7.13.0",
@@ -19,9 +18,9 @@
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.4.1",
-    "node-sass": "^5.0.0",
     "postcss": "^8.2.10",
     "postcss-loader": "^5.2.0",
+    "sass": "^1.51.0",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
