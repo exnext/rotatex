@@ -20,20 +20,14 @@
     }
 }
 
-
 ul.rotatex {
     list-style-type: none;
     padding: 0;
-    margin: 0; 
+    margin: 0;
 }
 
 .rotatex {
     position: relative;
-    // ul#{&} {
-    //     list-style-type: none;
-    //     padding: 0;
-    //     margin: 0; 
-    // }
 
     & > * {
         --start-angle: 0deg;
@@ -45,15 +39,15 @@ ul.rotatex {
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
-    
+
         & > * {
             position: absolute;
             bottom: 100%;
             left: 50%;
         }
-    
+
         @include rotate(0deg);
-    
+
         $index: 0;
         @while $index <= 360 {
             &.r-#{$index} {
@@ -65,70 +59,71 @@ ul.rotatex {
             // &:first-child:nth-last-child(#{$index}) ~ & {
             //     width: 25%;
             // }
-            
+
             $index: $index + 1;
         }
-    
+
         &.off {
             @include rotate(0deg);
         }
-    
+
         &.debug {
             border: 1px solid red;
         }
     }
 }
 
-li1:first-child:nth-last-child(4),
-li1:first-child:nth-last-child(4) ~ li1 {
-    width: 25%;
-}
+// li1:first-child:nth-last-child(4),
+// li1:first-child:nth-last-child(4) ~ li1 {
+//     width: 25%;
+// }
 
-.rotatex2, [data-rotatex] {
-    --start-angle: 0deg;
+// .rotatex2,
+// [data-rotatex] {
+//     --start-angle: 0deg;
 
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     border-radius: 50%;
 
-    & > * {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-    }
+//     & > * {
+//         position: absolute;
+//         bottom: 100%;
+//         left: 50%;
+//     }
 
-    @include rotate(0deg);
+//     @include rotate(0deg);
 
-    $index: 0;
-    @while $index <= 360 {
-        &.r-#{$index}:not([data-rotatex]) {
-            @include rotate(#{$index}deg);
-        }
+//     $index: 0;
+//     @while $index <= 360 {
+//         &.r-#{$index}:not([data-rotatex]) {
+//             @include rotate(#{$index}deg);
+//         }
 
-        $index: $index + 1;
-    }
+//         $index: $index + 1;
+//     }
 
-    // I am going to working for this in future.
-    // Read about angle: https://developer.mozilla.org/en-US/docs/Web/CSS/attr#Syntax
-    // &[data-rotatex] {
-    //     --angle: attr(data-rotatex);
-    //     @include rotate(attr(data-rotatex angle));
-    // }
+//     // I am going to working for this in future.
+//     // Read about angle: https://developer.mozilla.org/en-US/docs/Web/CSS/attr#Syntax
+//     // &[data-rotatex] {
+//     //     --angle: attr(data-rotatex);
+//     //     @include rotate(attr(data-rotatex angle));
+//     // }
 
-    &[data-rotatex] {
-        --angle: 0deg;
-        @include rotate(var(--angle));
-    }
+//     &[data-rotatex] {
+//         --angle: 0deg;
+//         @include rotate(var(--angle));
+//     }
 
-    &.off {
-        @include rotate(0deg);
-    }
+//     &.off {
+//         @include rotate(0deg);
+//     }
 
-    &.debug {
-        border: 1px solid red;
-    }
-}
+//     &.debug {
+//         border: 1px solid red;
+//     }
+// }
