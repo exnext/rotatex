@@ -13,13 +13,13 @@ export class Rotatex {
 
     private build() {
         this.element.classList.add('rotatex');
-        let agle: number = 360 / this.element.children.length;
+        let children: NodeListOf<HTMLElement> = this.element.querySelectorAll(':scope > *:not(.r-off)');
+        let agle: number = 360 / children.length;
 
-        for (let idx: number = 0; idx < this.element.children.length; idx++) {
+        children.forEach((child: HTMLElement, idx: number) => {
             let deg = Math.round(agle * idx);
-            let child: HTMLElement = this.element.children[idx] as HTMLElement;
-            child.style.setProperty('--start-angle', deg + "deg");
-        }
+            child.style.setProperty('--start-angle', deg + 'deg');
+        });
     }
 
     constructor(private element: HTMLElement, private options?: RotatexOptions) {

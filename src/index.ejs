@@ -92,6 +92,10 @@
       li.appendChild(span);
       ul2.appendChild(li);
 
+      if (x % 3) {
+        li.classList.add('r-off');
+      }
+
       if (x == 20) {
         clearInterval(interval);
       }

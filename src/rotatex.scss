@@ -29,8 +29,9 @@ ul.rotatex {
 .rotatex {
     position: relative;
 
-    & > * {
+    & > *:not(.r-off) {
         --start-angle: 0deg;
+        --angle: 0deg;
 
         position: absolute;
         width: 100%;
@@ -46,7 +47,7 @@ ul.rotatex {
             left: 50%;
         }
 
-        @include rotate(0deg);
+        @include rotate(var(--angle));
 
         $index: 0;
         @while $index <= 360 {
@@ -54,31 +55,12 @@ ul.rotatex {
                 @include rotate(#{$index}deg);
             }
 
-            //exclude
-            // &:first-child:nth-last-child(#{$index}),
-            // &:first-child:nth-last-child(#{$index}) ~ & {
-            //     width: 25%;
-            // }
-
             $index: $index + 1;
-        }
-
-        &.off {
-            @include rotate(0deg);
-        }
-
-        &.debug {
-            border: 1px solid red;
         }
     }
 }
 
-// li1:first-child:nth-last-child(4),
-// li1:first-child:nth-last-child(4) ~ li1 {
-//     width: 25%;
-// }
-
-// .rotatex2,
+// .rotatex,
 // [data-rotatex] {
 //     --start-angle: 0deg;
 
@@ -117,13 +99,5 @@ ul.rotatex {
 //     &[data-rotatex] {
 //         --angle: 0deg;
 //         @include rotate(var(--angle));
-//     }
-
-//     &.off {
-//         @include rotate(0deg);
-//     }
-
-//     &.debug {
-//         border: 1px solid red;
 //     }
 // }
