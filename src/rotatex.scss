@@ -10,8 +10,8 @@
     To fix this problem you can set css variables --calculated and --calculated-reverse (opposite sign of --calculated).
 */
 
-@mixin rotate($angle) {
-    --calculated: calc(var(--start-angle) + #{$angle});
+@mixin rotate() {
+    --calculated: calc(var(--start-angle) + var(--angle));
     --calculated-reverse: calc(var(--calculated) * -1);
 
     transform: translate(-50%, -50%) rotate(var(--calculated));
@@ -47,57 +47,15 @@ ul.rotatex {
             left: 50%;
         }
 
-        @include rotate(var(--angle));
+        @include rotate();
 
         $index: 0;
         @while $index <= 360 {
             &.r-#{$index} {
-                @include rotate(#{$index}deg);
+                --angle: #{$index}deg;
             }
 
             $index: $index + 1;
         }
     }
 }
-
-// .rotatex,
-// [data-rotatex] {
-//     --start-angle: 0deg;
-
-//     position: absolute;
-//     width: 100%;
-//     height: 100%;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     border-radius: 50%;
-
-//     & > * {
-//         position: absolute;
-//         bottom: 100%;
-//         left: 50%;
-//     }
-
-//     @include rotate(0deg);
-
-//     $index: 0;
-//     @while $index <= 360 {
-//         &.r-#{$index}:not([data-rotatex]) {
-//             @include rotate(#{$index}deg);
-//         }
-
-//         $index: $index + 1;
-//     }
-
-//     // I am going to working for this in future.
-//     // Read about angle: https://developer.mozilla.org/en-US/docs/Web/CSS/attr#Syntax
-//     // &[data-rotatex] {
-//     //     --angle: attr(data-rotatex);
-//     //     @include rotate(attr(data-rotatex angle));
-//     // }
-
-//     &[data-rotatex] {
-//         --angle: 0deg;
-//         @include rotate(var(--angle));
-//     }
-// }
