@@ -42,12 +42,12 @@
 <body>
   <div class="demo">
     <ul class="rotatex">
-      <li style="--start-angle: 0deg;"><span>Test 1</span></li>
-      <li style="--start-angle: 60deg;"><span>Test 2</span></li>
-      <li style="--start-angle: 120deg;"><span>Test 3</span></li>
-      <li style="--start-angle: 180deg;"><span>Test 4</span></li>
-      <li style="--start-angle: 240deg;"><span>Test 5</span></li>
-      <li style="--start-angle: 300deg;"><span>Test 6</span></li>
+      <li style="--angle: 0deg;"><span>Test 1</span></li>
+      <li style="--angle: 60deg;"><span>Test 2</span></li>
+      <li style="--angle: 120deg;"><span>Test 3</span></li>
+      <li style="--angle: 180deg;"><span>Test 4</span></li>
+      <li style="--angle: 240deg;"><span>Test 5</span></li>
+      <li style="--angle: 300deg;"><span>Test 6</span></li>
     </ul>
 
     <ul class="rotatex">
@@ -66,12 +66,16 @@
 
   <script>
     let ul1 = document.getElementById('dynamic');
-    let rotatex1 = new Rotatex(ul1);
+    let rotatex1 = new Rotatex(ul1, { scrollBy: 10, scrollLimit: 360 });
+
+    rotatex1.on('rotate', (event) => {
+      console.log(event);
+    });
 
     for (i = 1; i <= 10; i++) {
       let li = document.createElement('li');
       let span = document.createElement('span');
-      
+
       span.innerText = 'Test ' + i;
       li.appendChild(span);
       ul1.appendChild(li);
@@ -83,11 +87,11 @@
 
     let x = 0;
 
-    let interval = setInterval(function() {
+    let interval = setInterval(function () {
       x++;
       let li = document.createElement('li');
       let span = document.createElement('span');
-      
+
       span.innerText = 'Test ' + x;
       li.appendChild(span);
       ul2.appendChild(li);
