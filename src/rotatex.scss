@@ -11,7 +11,7 @@
 */
 
 $rOff: 'r-off';
-$animationOptions: 3s;
+$animationOptions: 3s linear infinite;
 
 @mixin rotate() {
     --calculated: calc(var(--offset-by-scroll) + var(--offset-angle) + var(--angle));
@@ -64,79 +64,52 @@ ul.rotatex {
         }
     }
 
-    // &.left-rotating {
-    //     & > *:not(.#{$rOff}) {
-    //         animation: $animationOptions left-rotating;
+    &#{&}-rotate {
+        &#{&}__left {
+            & > *:not(.#{$rOff}) {
+                --to-offset-angle: calc(var(--offset-by-scroll) + var(--offset-angle) - 360deg);
+            }
+        }
 
-    //         & > * {
-    //             animation: $animationOptions left-rotating-child;
-    //         }
-    //     }
-    // }
+        &#{&}__right {
+            & > *:not(.#{$rOff}) {
+                --to-offset-angle: calc(var(--offset-by-scroll) + var(--offset-angle) + 360deg);
+            }
+        }
 
-    // &.right-rotating {
-    //     & > *:not(.#{$rOff}) {
-    //         animation: $animationOptions right-rotating;
-
-    //         & > * {
-    //             animation: $animationOptions right-rotating-child;
-    //         }
-    //     }
-    // }
+        &#{&}__left, &#{&}__right {
+            & > *:not(.#{$rOff}) {
+                --from-offset-angle: calc(var(--offset-by-scroll) + var(--offset-angle));
+                --from-calculated: calc(var(--from-offset-angle) + var(--angle));
+                --from-calculated-reverse: calc(var(--from-calculated) * -1);
+    
+                --to-calculated: calc(var(--to-offset-angle) + var(--angle));
+                --to-calculated-reverse: calc(var(--to-calculated) * -1);
+    
+                animation: $animationOptions rotatex-rotate;
+    
+                & > * {
+                    animation: $animationOptions rotatex-rotate-child;
+                }
+            }
+        }
+    }
 }
 
-// @keyframes left-rotating {
-//     from {
-//         --from-offset-angle: calc(var(--offset-by-scroll) + var(--offset-angle));
-//         --from-calculated: calc(var(--from-offset-angle) + var(--angle));
-//         transform: translate(-50%, -50%) rotate(var(--from-calculated));
-//     }
-//     to {
-//         --to-offset-angle: calc(var(--offset-by-scroll) + var(--offset-angle) - 360deg);
-//         --to-calculated: calc(var(--to-offset-angle) + var(--angle));
-//         transform: translate(-50%, -50%) rotate(var(--to-calculated));
-//     }
-// }
+@keyframes rotatex-rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(var(--from-calculated));
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(var(--to-calculated));
+    }
+}
 
-// @keyframes left-rotating-child {
-//     from {
-//         --from-offset-angle-child: 0deg;
-//         --from-calculated-child: calc(var(--from-offset-angle-child) + var(--angle));
-//         --calculated-reverse-child: calc(var(--from-calculated-child) * -1);
-//         transform: translateX(-50%) rotate(var(--calculated-reverse-child));
-//     }
-//     to {
-//         --to-offset-angle-child: -360deg;
-//         --to-calculated-child: calc(var(--to-offset-angle-child) + var(--angle));
-//         --calculated-reverse-child: calc(var(--to-calculated-child) * -1);
-//         transform: translateX(-50%) rotate(var(--calculated-reverse-child));
-//     }
-// }
-
-// @keyframes righ-trotating {
-//     from {
-//         --from-offset-angle: 0deg;
-//         --from-calculated: calc(var(--from-offset-angle) + var(--angle));
-//         transform: translate(-50%, -50%) rotate(var(--from-calculated));
-//     }
-//     to {
-//         --to-offset-angle: 360deg;
-//         --to-calculated: calc(var(--to-offset-angle) + var(--angle));
-//         transform: translate(-50%, -50%) rotate(var(--to-calculated));
-//     }
-// }
-
-// @keyframes righ-rotating-child {
-//     from {
-//         --from-offset-angle-child: 0deg;
-//         --from-calculated-child: calc(var(--from-offset-angle-child) + var(--angle));
-//         --calculated-reverse-child: calc(var(--from-calculated-child) * -1);
-//         transform: translateX(-50%) rotate(var(--calculated-reverse-child));
-//     }
-//     to {
-//         --to-offset-angle-child: 360deg;
-//         --to-calculated-child: calc(var(--to-offset-angle-child) + var(--angle));
-//         --calculated-reverse-child: calc(var(--to-calculated-child) * -1);
-//         transform: translateX(-50%) rotate(var(--calculated-reverse-child));
-//     }
-// }
+@keyframes rotatex-rotate-child {
+    from {
+        transform: translateX(-50%) rotate(var(--from-calculated-reverse));
+    }
+    to {
+        transform: translateX(-50%) rotate(var(--to-calculated-reverse));
+    }
+}

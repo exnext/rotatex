@@ -29,8 +29,13 @@
 
     ul {
       background-color: red;
-      width: 200px;
+      width: 150px;
       aspect-ratio: 1;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     li {
@@ -41,7 +46,16 @@
 
 <body>
   <div class="demo">
-    <ul class="rotatex">
+    <ul class="rotatex rotatex-rotate rotatex-rotate__left">
+      <li style="--angle: 0deg;"><span>Test 1</span></li>
+      <li style="--angle: 60deg;"><span>Test 2</span></li>
+      <li style="--angle: 120deg;"><span>Test 3</span></li>
+      <li style="--angle: 180deg;"><span>Test 4</span></li>
+      <li style="--angle: 240deg;"><span>Test 5</span></li>
+      <li style="--angle: 300deg;"><span>Test 6</span></li>
+    </ul>
+
+    <ul class="rotatex rotatex-rotate rotatex-rotate__right">
       <li style="--angle: 0deg;"><span>Test 1</span></li>
       <li style="--angle: 60deg;"><span>Test 2</span></li>
       <li style="--angle: 120deg;"><span>Test 3</span></li>
@@ -60,6 +74,8 @@
     </ul>
 
     <ul id="dynamic"></ul>
+
+    <ul id="animation" class="rotatex-rotate rotatex-rotate__left"></ul>
 
     <ul id="interval"></ul>
   </div>
@@ -81,6 +97,21 @@
       ul1.appendChild(li);
     }
 
+    let ul1a = document.getElementById('animation');
+    let rotatex1a = new Rotatex(ul1a, { scrollBy: 10, scrollLimit: 360 });
+
+    rotatex1a.on('rotate', (event) => {
+      console.log(event);
+    });
+
+    for (i = 1; i <= 10; i++) {
+      let li = document.createElement('li');
+      let span = document.createElement('span');
+
+      span.innerText = 'Test ' + i;
+      li.appendChild(span);
+      ul1a.appendChild(li);
+    }
 
     let ul2 = document.getElementById('interval');
     let rotatex2 = new Rotatex(ul2);
