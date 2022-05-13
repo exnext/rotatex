@@ -42,6 +42,12 @@ export class Rotatex extends Eventex {
             element.addEventListener('wheel', (event: WheelEvent) => {
                 this.rotate(event.deltaY);
             });
+
+            let lastClientY = 0;
+            element.addEventListener('touchmove', (event: TouchEvent) => {
+                this.rotate(event.touches[0].clientY - lastClientY);
+                lastClientY = event.touches[0].clientY;
+            });
         }
 
         this.observer.observe(element, Rotatex.ObserverOptions);
