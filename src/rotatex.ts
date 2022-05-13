@@ -1,5 +1,5 @@
 import './rotatex.scss';
-import { Eventex } from './eventex';
+import { Eventex } from '@exnext/eventex';
 
 export interface RotatexOptions {
     scrollBy: number;
@@ -83,7 +83,7 @@ export class Rotatex extends Eventex {
                         if (!isNaN(parseInt(curr))) {
                             acc += parseInt(curr);
                         }
-                        
+
                         return acc;
                     }, 0);
 
