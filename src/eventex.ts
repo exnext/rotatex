@@ -1,4 +1,4 @@
-type EventexCallback = any;
+type EventexCallback = (data: any) => any;
 
 interface ItemEvent {
     name: string;
@@ -6,36 +6,24 @@ interface ItemEvent {
     once: boolean;
 }
 
-export class Eventex<T = {}> {
+export class Eventex {
     private events: ItemEvent[] = []
 
-    emit(name: string, data: T) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let results: any = [];
-                let toExecute: ItemEvent[] = this.events.filter((event: ItemEvent) => event.name === name);
+    emit(name: string, data: any): Promise<any> {
+        let results: Promise<any>[] = [];
+        let toExecute: ItemEvent[] = this.events.filter((event: ItemEvent) => event.name === name && event.callback);
 
-                for (let event of toExecute) {
-                    if (event.once) {
-                        this.offEvent(event);
-                    }
-
-                    if (event.callback) {
-                        let result = event.callback(data);
-
-                        if (result instanceof Promise) {
-                            result = await result;
-                        }
-
-                        results.push(result);
-                    }
-                }
-
-                resolve(results);
-            } catch (error) {
-                reject(error);
+        toExecute.forEach((event: ItemEvent) => {
+            if (event.once) {
+                this.offEvent(event);
             }
+
+            results.push(new Promise(resolve => {
+                resolve(event.callback(data));
+            }));
         });
+
+        return Promise.all(results);
     }
 
     once(name: string, callback: EventexCallback) {

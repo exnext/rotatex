@@ -1,17 +1,17 @@
 import './rotatex.scss';
 import { Eventex } from './eventex';
 
-interface RotatexOptions {
+export interface RotatexOptions {
     scrollBy: number;
     scrollLimit?: number;
 }
 
-interface RotateChild {
+export interface RotateChild {
     element: HTMLElement,
     angle?: number;
 }
 
-interface RotateEvent {
+export interface RotateDataEvent {
     offsetByScroll: number;
     children: RotateChild[]
 }
@@ -66,7 +66,7 @@ export class Rotatex extends Eventex {
 
     private dispatchEvent() {
         if (this.some('rotate')) {
-            let data: RotateEvent = {
+            let data: RotateDataEvent = {
                 offsetByScroll: this.offsetByScroll,
                 children: []
             };
