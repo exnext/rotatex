@@ -2,7 +2,7 @@ import './rotatex.scss';
 import { Eventex } from '@exnext/eventex';
 
 export interface RotatexOptions {
-    rotateBy: number;
+    rotateByAngle: number;
     rotateLimit?: number;
 }
 
@@ -12,13 +12,13 @@ export interface RotateChild {
 }
 
 export interface RotateDataEvent {
-    offsetByScroll: number;
+    mainOffsetAngle: number;
     children: RotateChild[]
 }
 
 export class Rotatex extends Eventex {
     private static readonly ObserverOptions: MutationObserverInit = { attributes: false, childList: true, subtree: false };
-    private offsetByScroll: number = 0;
+    private mainOffsetAngle: number = 0;
 
     private observer: MutationObserver = new MutationObserver(() => {
         this.build();
@@ -38,7 +38,7 @@ export class Rotatex extends Eventex {
     constructor(private element: HTMLElement, private options?: RotatexOptions) {
         super();
 
-        if (options?.rotateBy) {
+        if (options?.rotateByAngle) {
             element.addEventListener('wheel', (event: WheelEvent) => {
                 let {deltaY, deltaX} = event;
                 
@@ -71,14 +71,14 @@ export class Rotatex extends Eventex {
 
     private rotate(delta: number) {
         if (delta > 0) {
-            this.offsetByScroll += this.options?.rotateBy || 0;
-            this.offsetByScroll = Math.min(this.offsetByScroll, this.options?.rotateLimit || 360000);
+            this.mainOffsetAngle += this.options?.rotateByAngle || 0;
+            this.mainOffsetAngle = Math.min(this.mainOffsetAngle, this.options?.rotateLimit || 360000);
         } else if (delta < 0) {
-            this.offsetByScroll -= this.options?.rotateBy || 0;
-            this.offsetByScroll = Math.max(this.offsetByScroll, -1 * (this.options?.rotateLimit || 360000));
+            this.mainOffsetAngle -= this.options?.rotateByAngle || 0;
+            this.mainOffsetAngle = Math.max(this.mainOffsetAngle, -1 * (this.options?.rotateLimit || 360000));
         }
 
-        this.element.style.setProperty('--offset-by-scroll', this.offsetByScroll + 'deg');
+        this.element.style.setProperty('--main-offset-angle', this.mainOffsetAngle + 'deg');
 
         if (delta) {
             this.dispatchEvent();
@@ -88,7 +88,7 @@ export class Rotatex extends Eventex {
     private dispatchEvent() {
         if (this.some('rotate')) {
             let data: RotateDataEvent = {
-                offsetByScroll: this.offsetByScroll,
+                mainOffsetAngle: this.mainOffsetAngle,
                 children: []
             };
 
