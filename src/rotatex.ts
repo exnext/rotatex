@@ -2,8 +2,8 @@ import './rotatex.scss';
 import { Eventex } from '@exnext/eventex';
 
 export interface RotatexOptions {
-    scrollBy: number;
-    scrollLimit?: number;
+    rotateBy: number;
+    rotateLimit?: number;
 }
 
 export interface RotateChild {
@@ -38,15 +38,30 @@ export class Rotatex extends Eventex {
     constructor(private element: HTMLElement, private options?: RotatexOptions) {
         super();
 
-        if (options?.scrollBy) {
+        if (options?.rotateBy) {
             element.addEventListener('wheel', (event: WheelEvent) => {
-                this.rotate(event.deltaY);
+                let {deltaY, deltaX} = event;
+                
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    this.rotate(deltaY);
+                } else {
+                    this.rotate(deltaX);
+                }
             });
 
-            let lastClientY = 0;
+            let lastClientY = 0, lastClientX = 0;
             element.addEventListener('touchmove', (event: TouchEvent) => {
-                this.rotate(event.touches[0].clientY - lastClientY);
+                let deltaY = event.touches[0].clientY - lastClientY;
+                let deltaX = event.touches[0].clientX - lastClientX;
+                
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    this.rotate(deltaY);
+                } else {
+                    this.rotate(deltaX);
+                }
+                
                 lastClientY = event.touches[0].clientY;
+                lastClientX = event.touches[0].clientX;
             });
         }
 
@@ -56,11 +71,11 @@ export class Rotatex extends Eventex {
 
     private rotate(delta: number) {
         if (delta > 0) {
-            this.offsetByScroll += this.options?.scrollBy || 0;
-            this.offsetByScroll = Math.min(this.offsetByScroll, this.options?.scrollLimit || 36000);
+            this.offsetByScroll += this.options?.rotateBy || 0;
+            this.offsetByScroll = Math.min(this.offsetByScroll, this.options?.rotateLimit || 360000);
         } else if (delta < 0) {
-            this.offsetByScroll -= this.options?.scrollBy || 0;
-            this.offsetByScroll = Math.max(this.offsetByScroll, -1 * (this.options?.scrollLimit || 36000));
+            this.offsetByScroll -= this.options?.rotateBy || 0;
+            this.offsetByScroll = Math.max(this.offsetByScroll, -1 * (this.options?.rotateLimit || 360000));
         }
 
         this.element.style.setProperty('--offset-by-scroll', this.offsetByScroll + 'deg');

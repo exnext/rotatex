@@ -45,6 +45,10 @@
     li > * {
       transition: all 1s;
     }
+
+    ul:hover * {
+      animation-duration: 10s !important;
+    }
   </style>
 </head>
 
@@ -86,7 +90,7 @@
 
   <script>
     let ul1 = document.getElementById('dynamic');
-    let rotatex1 = new Rotatex(ul1, { scrollBy: 10, scrollLimit: 360 });
+    let rotatex1 = new Rotatex(ul1, { rotateBy: -10, rotateLimit: 360 });
 
     rotatex1.on('rotate', (event) => {
       console.log(event);
@@ -102,7 +106,7 @@
     }
 
     let ul1a = document.getElementById('animation');
-    let rotatex1a = new Rotatex(ul1a, { scrollBy: 10, scrollLimit: 360 });
+    let rotatex1a = new Rotatex(ul1a, { rotateBy: -10, rotateLimit: 360 });
 
     rotatex1a.on('rotate', (event) => {
       console.log(event);
