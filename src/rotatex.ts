@@ -41,29 +41,34 @@ export class Rotatex extends Eventex {
         if (options?.rotateByAngle) {
             element.addEventListener('wheel', (event: WheelEvent) => {
                 event.preventDefault();
-                
-                let {deltaY, deltaX} = event;
-                
+
+                let delta: number = 0, { deltaY, deltaX } = event;
+
                 if (Math.abs(deltaY) > Math.abs(deltaX)) {
-                    this.rotate(deltaY);
+                    delta = (this.options?.rotateByAngle || 0) * deltaY / Math.abs(deltaY);
                 } else {
-                    this.rotate(deltaX);
+                    delta = (this.options?.rotateByAngle || 0) * deltaX / Math.abs(deltaX);
                 }
+
+                this.rotate(delta);
             });
 
             let lastClientY = 0, lastClientX = 0;
             element.addEventListener('touchmove', (event: TouchEvent) => {
                 event.preventDefault();
-                
-                let deltaY = event.touches[0].clientY - lastClientY;
-                let deltaX = event.touches[0].clientX - lastClientX;
-                
+
+                let delta: number = 0,
+                    deltaY: number = event.touches[0].clientY - lastClientY,
+                    deltaX: number = event.touches[0].clientX - lastClientX;
+
                 if (Math.abs(deltaY) > Math.abs(deltaX)) {
-                    this.rotate(deltaY);
+                    delta = (this.options?.rotateByAngle || 0) * deltaY / Math.abs(deltaY);
                 } else {
-                    this.rotate(deltaX);
+                    delta = (this.options?.rotateByAngle || 0) * deltaX / Math.abs(deltaX);
                 }
-                
+
+                this.rotate(delta);
+
                 lastClientY = event.touches[0].clientY;
                 lastClientX = event.touches[0].clientX;
             });
@@ -77,15 +82,13 @@ export class Rotatex extends Eventex {
         return this.element;
     }
 
-    rotate(delta: number) {
-        if (delta > 0) {
-            this.mainOffsetAngle += this.options?.rotateByAngle || 0;
-            this.mainOffsetAngle = Math.min(this.mainOffsetAngle, this.options?.rotateLimit || 360000);
-        } else if (delta < 0) {
-            this.mainOffsetAngle -= this.options?.rotateByAngle || 0;
-            this.mainOffsetAngle = Math.max(this.mainOffsetAngle, -1 * (this.options?.rotateLimit || 360000));
-        }
+    get MainOffsetAngle(): number {
+        return this.mainOffsetAngle;
+    }
 
+    rotate(delta: number) {
+        this.mainOffsetAngle += delta;
+        this.fixRotateLimit(delta);
         this.element.style.setProperty('--main-offset-angle', this.mainOffsetAngle + 'deg');
 
         if (delta) {
@@ -95,34 +98,49 @@ export class Rotatex extends Eventex {
 
     setRotation(delta: number) {
         this.mainOffsetAngle = delta;
+        this.fixRotateLimit(delta);
         this.rotate(0);
+    }
+
+    private fixRotateLimit(delta: number) {
+        if (delta > 0) {
+            this.mainOffsetAngle = Math.min(this.mainOffsetAngle, this.options?.rotateLimit || 360000);
+        } else if (delta < 0) {
+            this.mainOffsetAngle = Math.max(this.mainOffsetAngle, -1 * (this.options?.rotateLimit || 360000));
+        }
+    }
+
+    getChildrenDetails() {
+        let data: RotateChild[] = [];
+
+        let children: NodeListOf<HTMLElement> = this.element.querySelectorAll(':scope > *:not(.r-off)');
+
+        children.forEach((element: HTMLElement, idx: number) => {
+            let compStyles = window.getComputedStyle(element);
+
+            let angle: number | undefined = compStyles
+                .getPropertyValue('--calculated')
+                .match(/[-]{0,1}[\d+-]*[.]{0,1}[\d]+/g)
+                ?.reduce((acc: number, curr: string) => {
+                    if (!isNaN(parseInt(curr))) {
+                        acc += parseInt(curr);
+                    }
+
+                    return acc;
+                }, 0);
+
+            data.push({ element, angle });
+        });
+
+        return data;
     }
 
     private dispatchEvent() {
         if (this.some('rotate')) {
             let data: RotateDataEvent = {
                 mainOffsetAngle: this.mainOffsetAngle,
-                children: []
+                children: this.getChildrenDetails()
             };
-
-            let children: NodeListOf<HTMLElement> = this.element.querySelectorAll(':scope > *:not(.r-off)');
-
-            children.forEach((element: HTMLElement, idx: number) => {
-                let compStyles = window.getComputedStyle(element);
-
-                let angle: number | undefined = compStyles
-                    .getPropertyValue('--calculated')
-                    .match(/[-]{0,1}[\d+-]*[.]{0,1}[\d]+/g)
-                    ?.reduce((acc: number, curr: string) => {
-                        if (!isNaN(parseInt(curr))) {
-                            acc += parseInt(curr);
-                        }
-
-                        return acc;
-                    }, 0);
-
-                data.children.push({ element, angle });
-            });
 
             this.emit('rotate', data);
         }
