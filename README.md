@@ -185,5 +185,8 @@ class Rotatex {
 
     /* Set an absolute rotation */
     setRotation(delta: number): void;
+
+    /* Return information about all children elements with its angle */
+    getChildrenDetails(): RotateChild[];
 }
 ```
