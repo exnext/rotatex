@@ -9,7 +9,8 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
-  <style>
+
+  <style name="common">
     body {
       margin: 0;
       padding: 0;
@@ -18,13 +19,16 @@
       font-family: sans-serif;
     }
 
-    .demo {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      transform: translateY(-50%);
+    section {
+      position: relative;
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff4;
+      border-radius: 10px;
+    }
+
+    section>div {
       display: flex;
-      justify-content: space-around;
     }
 
     ul {
@@ -42,7 +46,7 @@
       transition: all 1s;
     }
 
-    li > * {
+    li>* {
       transition: all 1s;
     }
 
@@ -50,100 +54,416 @@
       animation-duration: 10s !important;
     }
   </style>
+
+  <style name="common" media="all and (max-width: 500px)">
+    section>div {
+      flex-direction: column;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="demo">
-    <ul class="rotatex rotatex-rotate rotatex-rotate__left">
-      <li style="--angle: 0deg;"><span>Test 1</span></li>
-      <li style="--angle: 60deg;"><span>Test 2</span></li>
-      <li style="--angle: 120deg;"><span>Test 3</span></li>
-      <li style="--angle: 180deg;"><span>Test 4</span></li>
-      <li style="--angle: 240deg;"><span>Test 5</span></li>
-      <li style="--angle: 300deg;"><span>Test 6</span></li>
-    </ul>
+  <template>
+    <section>
+      <h3>Title</h3>
 
-    <ul class="rotatex rotatex-rotate rotatex-rotate__right">
-      <li style="--angle: 0deg;"><span>Test 1</span></li>
-      <li style="--angle: 60deg;"><span>Test 2</span></li>
-      <li style="--angle: 120deg;"><span>Test 3</span></li>
-      <li style="--angle: 180deg;"><span>Test 4</span></li>
-      <li style="--angle: 240deg;"><span>Test 5</span></li>
-      <li style="--angle: 300deg;"><span>Test 6</span></li>
-    </ul>
+      <div>
+        <div class="source">
 
-    <ul class="rotatex">
-      <li class="r-0"><span>Test 1</span></li>
-      <li class="r-60"><span>Test 2</span></li>
-      <li class="r-120"><span>Test 3</span></li>
-      <li class="r-180"><span>Test 4</span></li>
-      <li class="r-240"><span>Test 5</span></li>
-      <li class="r-300"><span>Test 6</span></li>
-    </ul>
+        </div>
 
-    <ul id="dynamic"></ul>
+        <div class="result">
 
-    <ul id="animation" class="rotatex-rotate rotatex-rotate__left"></ul>
+        </div>
+      </div>
+    </section>
+  </template>
 
-    <ul id="interval"></ul>
-  </div>
+  <section>
+    <h3>Without usage rotatex library</h3>
 
-  <script>
-    let ul1 = document.getElementById('dynamic');
-    let rotatex1 = new Rotatex(ul1, { rotateByAngle: -10, rotateLimit: 360 });
+    <div>
+      <div class="source">
 
-    rotatex1.on('rotate', (event) => {
-      console.log(event);
-    });
+      </div>
 
-    for (i = 1; i <= 10; i++) {
-      let li = document.createElement('li');
-      let span = document.createElement('span');
+      <div class="result">
+        <ul>
+          <li><span>Test 1</span></li>
+          <li><span>Test 2</span></li>
+          <li><span>Test 3</span></li>
+          <li><span>Test 4</span></li>
+          <li><span>Test 5</span></li>
+          <li><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-      span.innerText = 'Test ' + i;
-      li.appendChild(span);
-      ul1.appendChild(li);
-    }
+  <h1>Based only on rotatex.css</h1>
 
-    let ul1a = document.getElementById('animation');
-    let rotatex1a = new Rotatex(ul1a, { rotateByAngle: -10, rotateLimit: 360 });
+  <section>
+    <h3>Usage with css class</h3>
 
-    rotatex1a.on('rotate', (event) => {
-      console.log(event);
-    });
+    <div>
+      <div class="source">
 
-    for (i = 1; i <= 10; i++) {
-      let li = document.createElement('li');
-      let span = document.createElement('span');
+      </div>
 
-      span.innerText = 'Test ' + i;
-      li.appendChild(span);
-      ul1a.appendChild(li);
-    }
+      <div class="result">
+        <ul class="rotatex">
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    let ul2 = document.getElementById('interval');
-    let rotatex2 = new Rotatex(ul2);
+  <section>
+    <h3>Usage with css variables</h3>
 
-    let x = 0;
+    <div>
+      <div class="source">
 
-    let interval = setInterval(function () {
-      x++;
-      let li = document.createElement('li');
-      let span = document.createElement('span');
+      </div>
 
-      span.innerText = 'Test ' + x;
-      li.appendChild(span);
-      ul2.appendChild(li);
+      <div class="result">
+        <ul class="rotatex">
+          <li style="--angle: 0deg;"><span>Test 1</span></li>
+          <li style="--angle: 60deg;"><span>Test 2</span></li>
+          <li style="--angle: 120deg;"><span>Test 3</span></li>
+          <li style="--angle: 180deg;"><span>Test 4</span></li>
+          <li style="--angle: 240deg;"><span>Test 5</span></li>
+          <li style="--angle: 300deg;"><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-      if (!(x % 3)) {
-        li.classList.add('r-off');
-      }
+  <section>
+    <h3>Excluded items</h3>
 
-      if (x == 20) {
-        clearInterval(interval);
-      }
-    }, 1000);
-  </script>
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <style>
+          .excluded-menu {
+            font-weight: bold;
+          }
+        </style>
+
+        <ul class="rotatex">
+          <li class="r-off excluded-menu">Menu</li>
+
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li style="--angle: 180deg;"><span>Test 4</span></li>
+          <li style="--angle: 240deg;"><span>Test 5</span></li>
+          <li style="--angle: 300deg;"><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Left rotation animation</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul class="rotatex rotatex-rotate rotatex-rotate__left">
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Right rotation animation</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul class="rotatex rotatex-rotate rotatex-rotate__right">
+          <li style="--angle: 0deg;"><span>Test 1</span></li>
+          <li style="--angle: 60deg;"><span>Test 2</span></li>
+          <li style="--angle: 120deg;"><span>Test 3</span></li>
+          <li style="--angle: 180deg;"><span>Test 4</span></li>
+          <li style="--angle: 240deg;"><span>Test 5</span></li>
+          <li style="--angle: 300deg;"><span>Test 6</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <h1>Based also on rotatex.js</h1>
+
+  <section>
+    <h3>Creating dynamic menu</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul id="dynamic"></ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('dynamic');
+            let rotatex = new Rotatex(ul);
+
+            for (i = 1; i <= 10; i++) {
+              let li = document.createElement('li');
+              let span = document.createElement('span');
+
+              span.innerText = 'Test ' + i;
+              li.appendChild(span);
+              ul.appendChild(li);
+            }
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Real time changing menu items</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul id="interval"></ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('interval');
+            let rotatex = new Rotatex(ul);
+            let x = 1;
+
+            setInterval(function () {
+              let li = document.createElement('li');
+              let span = document.createElement('span');
+
+              span.innerText = 'Test ' + x++;
+              li.appendChild(span);
+              ul.appendChild(li);
+
+
+              if (ul.children.length >= 15) {
+                for (let i = 0; i < Math.ceil(Math.random() * 5); i++) {
+                  ul.children[0].remove();
+                }
+              }
+            }, 1000);
+          })();  
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Rotating by the mouse wheel or finger on the touch screen actions - clockwise</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul class="rotatex" id="clockwise_action">
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('clockwise_action');
+            let rotatex = new Rotatex(ul, { rotateByAngle: 10 });
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Rotating by the mouse wheel or finger on the touch screen actions - counterclockwise</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul class="rotatex" id="counterclockwise_action">
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('counterclockwise_action');
+            let rotatex = new Rotatex(ul, { rotateByAngle: -10 });
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Rotating with limit by the mouse wheel or finger on the touch screen actions</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <ul class="rotatex" id="limit_actions">
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('limit_actions');
+            let rotatex = new Rotatex(ul, { rotateByAngle: 10, rotateLimit: 720 });
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Event for rotation actions</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <style>
+          .counter {
+            font-weight: bold;
+            font-size: 2rem;
+          }
+        </style>
+
+        <ul class="rotatex" id="event">
+          <li class="r-off counter">0</li>
+          <li class="r-0"><span>Test 1</span></li>
+          <li class="r-60"><span>Test 2</span></li>
+          <li class="r-120"><span>Test 3</span></li>
+          <li class="r-180"><span>Test 4</span></li>
+          <li class="r-240"><span>Test 5</span></li>
+          <li class="r-300"><span>Test 6</span></li>
+        </ul>
+
+        <script>
+          (() => {
+            let ul = document.getElementById('event');
+            let counter = ul.querySelector('.r-off.counter');
+            let rotatex = new Rotatex(ul, { rotateByAngle: 10, rotateLimit: 7200 });
+
+            rotatex.on('rotate', (event) => {
+              counter.innerText = Math.floor(event.mainOffsetAngle / 360);
+            });
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Event for rotation actions with rotate method</h3>
+
+    <div>
+      <div class="source">
+
+      </div>
+
+      <div class="result">
+        <style>
+          .label {
+            font-weight: bold;
+          }
+
+          #master {
+            margin-bottom: 50px;
+          }
+        </style>
+
+        <ul class="rotatex" id="master">
+          <li class="r-off label">Master</li>
+
+          <li class="r-0"><span>Master 1</span></li>
+          <li class="r-60"><span>Master 2</span></li>
+          <li class="r-120"><span>Master 3</span></li>
+          <li class="r-180"><span>Master 4</span></li>
+          <li class="r-240"><span>Master 5</span></li>
+          <li class="r-300"><span>Master 6</span></li>
+        </ul>
+
+        <ul class="rotatex" id="slave">
+          <li class="r-off label">Slave</li>
+
+          <li style="--angle: 0deg;"><span>Slave 1</span></li>
+          <li style="--angle: 60deg;"><span>Slave 2</span></li>
+          <li style="--angle: 120deg;"><span>Slave 3</span></li>
+        </ul>
+
+        <script>
+          (() => {
+            let ul_master = document.getElementById('master');
+            let rotatex_master = new Rotatex(ul_master, { rotateByAngle: 10 });
+
+            let ul_slave = document.getElementById('slave');
+            let rotatex_salve = new Rotatex(ul_slave);
+
+            rotatex_master.on('rotate', (event) => {
+              rotatex_salve.setRotation(event.mainOffsetAngle);
+            });
+          })();
+        </script>
+      </div>
+    </div>
+  </section>
 </body>
 
 </html>

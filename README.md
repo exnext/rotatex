@@ -41,7 +41,7 @@ Main element should have set `rotatex` class to enable the library.
 Every child element should have set classes from `r-0` to `r-360` or `--angle` variable.
 
 * classes from `r-0` to `r-360` describe an angle of rotation
-* `r-off` class is for setting exceptions
+* `r-off` class is for setting excluded items
 
 * by `--angle` variable you can set angle
 * using `--offset-angle` you can set offset for an angle. Great for menu rotation by routing on any SPA framework or other situation. To rotate all menu you can use also `--main-offset-angle` variable with main element instead `--offset-angle` on all children. But be careful, `--main-offset-angle` is set by Rotatex javascript class and they shouldn't be used togather.
@@ -62,7 +62,7 @@ Rotating by class name from `r-0` to `r-360` or by `--angle` css variable
 </ul>
 ```
 
-## Exceptions
+## Excludes
 
 If you want to set any item in the list other than the rest, e.g. by always placing it in the middle position, you can use the `r-off` class.
 
@@ -112,6 +112,22 @@ This is simple usage of `Rotatex` javascript class. You haven't to set css `rota
 </script>
 ```
 
+## Constructor
+
+* element - main element using rotatex library
+* options - few options described below
+
+```typescript 
+class Rotatex {
+    constructor(element: HTMLElement, options?: RotatexOptions | undefined);
+}
+
+interface RotatexOptions {
+    rotateByAngle: number;
+    rotateLimit?: number;
+}
+```
+
 ## Rotating by the mouse wheel or finger on the touch screen actions
 
 To rotate the list with the mouse wheel or finger on the touch screen, set the `rotateByAngle` option. The list will rotate clockwise.
@@ -154,5 +170,20 @@ interface RotateChild {
 interface RotateDataEvent {
     mainOffsetAngle: number;
     children: RotateChild[]
+}
+```
+
+## Public properties
+
+```typescript
+class Rotatex {
+    /* Return the connected main element */
+    get Element(): HTMLElement;
+
+    /* Change a rotation by code like during mouse and touchscreen actions */
+    rotate(delta: number): void;
+
+    /* Set an absolute rotation */
+    setRotation(delta: number): void;
 }
 ```

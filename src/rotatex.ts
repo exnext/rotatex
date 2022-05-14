@@ -40,6 +40,8 @@ export class Rotatex extends Eventex {
 
         if (options?.rotateByAngle) {
             element.addEventListener('wheel', (event: WheelEvent) => {
+                event.preventDefault();
+                
                 let {deltaY, deltaX} = event;
                 
                 if (Math.abs(deltaY) > Math.abs(deltaX)) {
@@ -51,6 +53,8 @@ export class Rotatex extends Eventex {
 
             let lastClientY = 0, lastClientX = 0;
             element.addEventListener('touchmove', (event: TouchEvent) => {
+                event.preventDefault();
+                
                 let deltaY = event.touches[0].clientY - lastClientY;
                 let deltaX = event.touches[0].clientX - lastClientX;
                 
@@ -69,7 +73,11 @@ export class Rotatex extends Eventex {
         this.build();
     }
 
-    private rotate(delta: number) {
+    get Element(): HTMLElement {
+        return this.element;
+    }
+
+    rotate(delta: number) {
         if (delta > 0) {
             this.mainOffsetAngle += this.options?.rotateByAngle || 0;
             this.mainOffsetAngle = Math.min(this.mainOffsetAngle, this.options?.rotateLimit || 360000);
@@ -83,6 +91,11 @@ export class Rotatex extends Eventex {
         if (delta) {
             this.dispatchEvent();
         }
+    }
+
+    setRotation(delta: number) {
+        this.mainOffsetAngle = delta;
+        this.rotate(0);
     }
 
     private dispatchEvent() {
