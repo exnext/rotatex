@@ -101,12 +101,6 @@
 
     <h3>NPM</h3>
     <pre><code class="language-bash">npm install @exnext/rotatex</code></pre>
-
-    <h3>Common styles for examples below</h3>
-    <div>
-      There are example styles below with are helpful for this presentation. That aren't requiert for your project.
-    </div>
-    <pre><code class="language-html source"></code></pre>
   </section>
 
   <section class="demo">
@@ -417,18 +411,28 @@
     </template>
   </section>
 
-  <h1>Useful examples</h1>
+  <h1>Other examples</h1>
 
   <section class="demo">
     <h3>Radio knobs</h3>
 
+    <style>
+      #radio-konbs {
+        background-color: initial;
+      }
+
+      #radio-konbs li {
+        transition: all 1s;
+      }
+
+      #radio-konbs li>* {
+        transition: all 1s;
+      }
+    </style>
+
     <template>
       <style>
-        .radio-konbs {
-          background-color: initial;
-        }
-
-        .radio-konbs span {
+        #radio-konbs span {
           display: block;
           width: 10px;
           height: 10px;
@@ -436,16 +440,28 @@
           background-color: red;
         }
 
-        .radio-konbs__konbs {
+        #radio-konbs .konbs {
           width: 50%;
           height: 50%;
           background-color: white;
           border-radius: 50%;
-          border: 3px solid black;
+          border: 4px solid black;
+          position: relative;
+        }
+
+        #radio-konbs .konbs::after {
+          content: '';
+          position: absolute;
+          width: 4px;
+          height: 33%;
+          top: 0%;
+          left: 50%;
+          background-color: black;
+          transform: translateX(-50%);
         }
       </style>
 
-      <ul class="rotatex radio-konbs">
+      <ul class="rotatex" id="radio-konbs">
         <li class="r-0"><span></span></li>
         <li class="r-60"><span></span></li>
         <li class="r-120"><span></span></li>
@@ -453,16 +469,21 @@
         <li class="r-240"><span></span></li>
         <li class="r-300"><span></span></li>
 
-        <li class="r-off radio-konbs__konbs"></li>
+        <li class="r-off konbs"></li>
       </ul>
+
+      <script>
+          let radioKonbs = document.getElementById('radio-konbs');
+          let rotatexRadioKonbs = new Rotatex(radioKonbs);
+
+          rotatexRadioKonbs.on('rotate', (event) => {
+            console.log(event);
+          });
+      </script>
     </template>
   </section>
 
   <script>
-    const styles = document.querySelectorAll('style[name="common"]');
-    const commonStyles = document.querySelector('section#common-styles .source');
-    commonStyles.textContent = [...styles].map(style => style.outerHTML).join('\n\n');
-
     const sectionContent = document.querySelector('template#section-content');
     const sections = document.querySelectorAll('section.demo');
 
