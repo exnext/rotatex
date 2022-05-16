@@ -15,8 +15,6 @@
 
   <style>
     body {
-      margin: 0;
-      padding: 0;
       background-color: black;
       color: white;
       font-family: sans-serif;
@@ -26,23 +24,35 @@
       position: relative;
       margin: 20px;
       padding: 20px;
-      /* background-color: #fff4; */
-      background-color: green;
+      background-color: #fff4;
       border-radius: 10px;
     }
 
-    section>div {
+    section a {
+      color: inherit;
+      font-weight: bold;
+    }
+
+    section.demo>div {
       display: flex;
       align-items: center;
+      gap: 20px;
     }
 
-    section>div>* {
+    section.demo>div>* {
       flex: 1;
+      margin: 10px;
     }
 
-    section>div>*:last-child {
+    section.demo>div>*:last-child {
       display: flex;
       justify-content: center;
+    }
+  </style>
+
+  <style media="all and (max-width: 1000px)">
+    section>div {
+      flex-direction: column;
     }
   </style>
 
@@ -70,33 +80,39 @@
       animation-duration: 10s !important;
     }
   </style>
-
-  <style name="common" media="all and (max-width: 500px)">
-    section>div {
-      flex-direction: column;
-    }
-  </style>
 </head>
 
 <body>
   <template id="section-content">
     <div>
       <pre><code class="language-html source"></code></pre>
-      <div><div class="result"></div></div>
+      <div>
+        <div class="result"></div>
+      </div>
     </div>
   </template>
 
   <h1>Introduction</h1>
 
   <section id="common-styles">
-    <h3>Common styles</h3>
+    <h3>Documentation</h3>
+    <div>Look at <a href="https://www.npmjs.com/package/@exnext/rotatex">npm</a> or <a
+        href="https://github.com/exnext/rotatex">github</a></div>
+
+    <h3>NPM</h3>
+    <pre><code class="language-bash">npm install @exnext/rotatex</code></pre>
+
+    <h3>Common styles for examples below</h3>
+    <div>
+      There are example styles below with are helpful for this presentation. That aren't requiert for your project.
+    </div>
     <pre><code class="language-html source"></code></pre>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Without usage rotatex library</h3>
 
-    <template class="demo">
+    <template>
       <ul>
         <li><span>Test 1</span></li>
         <li><span>Test 2</span></li>
@@ -110,10 +126,10 @@
 
   <h1>Based only on rotatex.css</h1>
 
-  <section>
+  <section class="demo">
     <h3>Usage with css class</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex">
         <li class="r-0"><span>Test 1</span></li>
         <li class="r-60"><span>Test 2</span></li>
@@ -125,10 +141,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Usage with css variables</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex">
         <li style="--angle: 0deg;"><span>Test 1</span></li>
         <li style="--angle: 60deg;"><span>Test 2</span></li>
@@ -140,10 +156,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Excluded items</h3>
 
-    <template class="demo">
+    <template>
       <style>
         .excluded-menu {
           font-weight: bold;
@@ -163,10 +179,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Left rotation animation</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex rotatex-rotate rotatex-rotate__left">
         <li class="r-0"><span>Test 1</span></li>
         <li class="r-60"><span>Test 2</span></li>
@@ -178,10 +194,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Right rotation animation</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex rotatex-rotate rotatex-rotate__right">
         <li style="--angle: 0deg;"><span>Test 1</span></li>
         <li style="--angle: 60deg;"><span>Test 2</span></li>
@@ -193,12 +209,12 @@
     </template>
   </section>
 
-  <h1>Based also on rotatex.js</h1>
+  <h1>Based on rotatex.css and rotatex.js</h1>
 
-  <section>
+  <section class="demo">
     <h3>Creating dynamic menu</h3>
 
-    <template class="demo">
+    <template>
       <ul id="dynamic"></ul>
 
       <script>
@@ -219,10 +235,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Real time changing menu items</h3>
 
-    <template class="demo">
+    <template>
       <ul id="interval"></ul>
 
       <script>
@@ -251,10 +267,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Rotating by the mouse wheel or finger on the touch screen actions - clockwise</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex" id="clockwise_action">
         <li class="r-0"><span>Test 1</span></li>
         <li class="r-60"><span>Test 2</span></li>
@@ -273,10 +289,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Rotating by the mouse wheel or finger on the touch screen actions - counterclockwise</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex" id="counterclockwise_action">
         <li class="r-0"><span>Test 1</span></li>
         <li class="r-60"><span>Test 2</span></li>
@@ -295,10 +311,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Rotating with limit by the mouse wheel or finger on the touch screen actions</h3>
 
-    <template class="demo">
+    <template>
       <ul class="rotatex" id="limit_actions">
         <li class="r-0"><span>Test 1</span></li>
         <li class="r-60"><span>Test 2</span></li>
@@ -317,10 +333,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Event for rotation actions</h3>
 
-    <template class="demo">
+    <template>
       <style>
         .counter {
           font-weight: bold;
@@ -352,10 +368,10 @@
     </template>
   </section>
 
-  <section>
+  <section class="demo">
     <h3>Event for rotation actions with rotate method</h3>
 
-    <template class="demo">
+    <template>
       <style>
         .label {
           font-weight: bold;
@@ -401,16 +417,57 @@
     </template>
   </section>
 
+  <h1>Useful examples</h1>
+
+  <section class="demo">
+    <h3>Radio knobs</h3>
+
+    <template>
+      <style>
+        .radio-konbs {
+          background-color: initial;
+        }
+
+        .radio-konbs span {
+          display: block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: red;
+        }
+
+        .radio-konbs__konbs {
+          width: 50%;
+          height: 50%;
+          background-color: white;
+          border-radius: 50%;
+          border: 3px solid black;
+        }
+      </style>
+
+      <ul class="rotatex radio-konbs">
+        <li class="r-0"><span></span></li>
+        <li class="r-60"><span></span></li>
+        <li class="r-120"><span></span></li>
+        <li class="r-180"><span></span></li>
+        <li class="r-240"><span></span></li>
+        <li class="r-300"><span></span></li>
+
+        <li class="r-off radio-konbs__konbs"></li>
+      </ul>
+    </template>
+  </section>
+
   <script>
     const styles = document.querySelectorAll('style[name="common"]');
     const commonStyles = document.querySelector('section#common-styles .source');
     commonStyles.textContent = [...styles].map(style => style.outerHTML).join('\n\n');
 
     const sectionContent = document.querySelector('template#section-content');
-    const sections = document.getElementsByTagName('section');
+    const sections = document.querySelectorAll('section.demo');
 
     for (let section of sections) {
-      let template = section.querySelector('template.demo');
+      let template = section.querySelector('template');
 
       if (template) {
         section.appendChild(sectionContent.content.cloneNode(true));
