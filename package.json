@@ -1,6 +1,6 @@
 {
   "name": "@exnext/rotatex",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/rotatex.js",
   "types": "dist/rotatex.d.ts",
@@ -52,7 +52,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/exnext/rotatex/issues"
   },
