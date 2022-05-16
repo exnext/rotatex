@@ -6,6 +6,8 @@ Library to make circular menu, list, etc. (...and everything what you want)
 
 Before reading the text below, first take a look at the live demo and see if it is interesting for you.
 
+[Live demo](https://exnext.github.io/rotatex/demo/)
+
 ## NPM
 
 ```bash
