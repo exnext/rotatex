@@ -2,7 +2,7 @@
     To use rotatex you should set classes to .rotatex and specific angle like .r-90 class;
     Clases from .r-0 to .r-360 contain only integer values of degrees.
     If you want use degree with fraction you should set css variable --angle to sepcific degree.
-    If you set css variable --start-angle than element will rotate with sum degrees of --start-angle variable
+    If you set css variable --offset-angle than element will rotate with sum degrees of --offset-angle variable
     and degree form class or --angle degree.
     
     PROBLEMS:
@@ -10,8 +10,11 @@
     To fix this problem you can set css variables --calculated and --calculated-reverse (opposite sign of --calculated).
 */
 
-@mixin rotate($angle) {
-    --calculated: calc(var(--start-angle) + #{$angle});
+$rOff: 'r-off';
+$animationOptions: 3s linear infinite;
+
+@mixin rotate() {
+    --calculated: calc(var(--main-offset-angle) + var(--offset-angle) + var(--angle));
     --calculated-reverse: calc(var(--calculated) * -1);
 
     transform: translate(-50%, -50%) rotate(var(--calculated));
@@ -20,23 +23,20 @@
     }
 }
 
-
 ul.rotatex {
     list-style-type: none;
     padding: 0;
-    margin: 0; 
+    margin: 0;
 }
 
 .rotatex {
-    position: relative;
-    // ul#{&} {
-    //     list-style-type: none;
-    //     padding: 0;
-    //     margin: 0; 
-    // }
+    --main-offset-angle: 0deg;
 
-    & > * {
-        --start-angle: 0deg;
+    position: relative;
+
+    & > *:not(.#{$rOff}) {
+        --offset-angle: 0deg;
+        --angle: 0deg;
 
         position: absolute;
         width: 100%;
@@ -45,90 +45,71 @@ ul.rotatex {
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
-    
+
         & > * {
             position: absolute;
             bottom: 100%;
             left: 50%;
         }
-    
-        @include rotate(0deg);
-    
+
+        @include rotate();
+
         $index: 0;
         @while $index <= 360 {
             &.r-#{$index} {
-                @include rotate(#{$index}deg);
+                --angle: #{$index}deg;
             }
-
-            //exclude
-            // &:first-child:nth-last-child(#{$index}),
-            // &:first-child:nth-last-child(#{$index}) ~ & {
-            //     width: 25%;
-            // }
-            
+    
             $index: $index + 1;
         }
-    
-        &.off {
-            @include rotate(0deg);
+    }
+
+    &#{&}-rotate {
+        &#{&}__left {
+            & > *:not(.#{$rOff}) {
+                --to-offset-angle: calc(var(--main-offset-angle) + var(--offset-angle) - 360deg);
+            }
         }
+
+        &#{&}__right {
+            & > *:not(.#{$rOff}) {
+                --to-offset-angle: calc(var(--main-offset-angle) + var(--offset-angle) + 360deg);
+            }
+        }
+
+        &#{&}__left, &#{&}__right {
+            & > *:not(.#{$rOff}) {
+                --from-offset-angle: calc(var(--main-offset-angle) + var(--offset-angle));
+                --from-calculated: calc(var(--from-offset-angle) + var(--angle));
+                --from-calculated-reverse: calc(var(--from-calculated) * -1);
     
-        &.debug {
-            border: 1px solid red;
+                --to-calculated: calc(var(--to-offset-angle) + var(--angle));
+                --to-calculated-reverse: calc(var(--to-calculated) * -1);
+    
+                animation: $animationOptions rotatex-rotate;
+    
+                & > * {
+                    animation: $animationOptions rotatex-rotate-child;
+                }
+            }
         }
     }
 }
 
-li1:first-child:nth-last-child(4),
-li1:first-child:nth-last-child(4) ~ li1 {
-    width: 25%;
+@keyframes rotatex-rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(var(--from-calculated));
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(var(--to-calculated));
+    }
 }
 
-.rotatex2, [data-rotatex] {
-    --start-angle: 0deg;
-
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-
-    & > * {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
+@keyframes rotatex-rotate-child {
+    from {
+        transform: translateX(-50%) rotate(var(--from-calculated-reverse));
     }
-
-    @include rotate(0deg);
-
-    $index: 0;
-    @while $index <= 360 {
-        &.r-#{$index}:not([data-rotatex]) {
-            @include rotate(#{$index}deg);
-        }
-
-        $index: $index + 1;
-    }
-
-    // I am going to working for this in future.
-    // Read about angle: https://developer.mozilla.org/en-US/docs/Web/CSS/attr#Syntax
-    // &[data-rotatex] {
-    //     --angle: attr(data-rotatex);
-    //     @include rotate(attr(data-rotatex angle));
-    // }
-
-    &[data-rotatex] {
-        --angle: 0deg;
-        @include rotate(var(--angle));
-    }
-
-    &.off {
-        @include rotate(0deg);
-    }
-
-    &.debug {
-        border: 1px solid red;
+    to {
+        transform: translateX(-50%) rotate(var(--to-calculated-reverse));
     }
 }
