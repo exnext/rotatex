@@ -6,6 +6,7 @@
   <title>
     <%= name %> ver.<%= version %>
   </title>
+  <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
@@ -33,24 +34,20 @@
       font-weight: bold;
     }
 
-    section.demo>div {
-      display: flex;
+    section.demo>.content {
+      display: grid;
+      grid-template-columns: 50% 50%;
       align-items: center;
-      gap: 20px;
     }
 
-    section.demo>div>* {
-      flex: 1;
-      margin: 10px;
-    }
-
-    section.demo>div>*:last-child {
+    section.demo>.content>*:last-child {
       display: flex;
       justify-content: center;
     }
 
     .result {
       position: relative;
+      min-height: 200px;
     }
 
     .advanced ul {
@@ -60,8 +57,8 @@
   </style>
 
   <style media="all and (max-width: 1000px)">
-    section>div {
-      flex-direction: column;
+    section.demo>.content {
+      display: block;
     }
   </style>
 
@@ -93,8 +90,11 @@
 
 <body>
   <template id="section-content">
-    <div>
-      <pre><code class="language-html source"></code></pre>
+    <div class="content">
+      <pre>
+        <code class="source language-html"></code>
+      </pre>
+      
       <div>
         <div class="result"></div>
       </div>
@@ -126,7 +126,7 @@
       }
     </style>
 
-    <div>
+    <div class="content">
       <pre><code class="language-html source"></code></pre>
       <div>
         <div class="smartphone">
@@ -617,8 +617,8 @@
       let template = section.querySelector('template');
 
       if (template) {
-        let templateId = ['section-content', section.getAttribute('template')].filter(x => x).join('-');
-        section.appendChild(sectionTemplates[templateId].content.cloneNode(true));
+        let sectionTemplateId = ['section-content', section.getAttribute('template')].filter(x => x).join('-');
+        section.appendChild(sectionTemplates[sectionTemplateId].content.cloneNode(true));
 
         let source = section.querySelector('.source');
         source.textContent = template.innerHTML;

@@ -1,4 +1,21 @@
-<!doctype html><html><head><meta charset="utf-8"><title>@exnext/rotatex ver.1.0.3</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="./favicon.ico"><link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/default.min.css"><script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js"></script><style>body {
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>
+    @exnext/rotatex ver.1.0.3
+  </title>
+  <base href="./">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+  <link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/default.min.css">
+  <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js"></script>
+
+  <style>
+    body {
       background-color: black;
       color: white;
       font-family: sans-serif;
@@ -17,32 +34,36 @@
       font-weight: bold;
     }
 
-    section.demo>div {
-      display: flex;
+    section.demo>.content {
+      display: grid;
+      grid-template-columns: 50% 50%;
       align-items: center;
-      gap: 20px;
     }
 
-    section.demo>div>* {
-      flex: 1;
-      margin: 10px;
-    }
-
-    section.demo>div>*:last-child {
+    section.demo>.content>*:last-child {
       display: flex;
       justify-content: center;
     }
 
     .result {
       position: relative;
+      min-height: 200px;
     }
 
     .advanced ul {
       background-color: transparent;
       display: initial;
-    }</style><style media="all and (max-width: 1000px)">section>div {
-      flex-direction: column;
-    }</style><style name="common">ul {
+    }
+  </style>
+
+  <style media="all and (max-width: 1000px)">
+    section.demo>.content {
+      display: block;
+    }
+  </style>
+
+  <style name="common">
+    ul {
       background-color: red;
       width: 150px;
       aspect-ratio: 1;
@@ -63,7 +84,26 @@
 
     ul:hover * {
       animation-duration: 10s !important;
-    }</style><link href="rotatex.css" rel="stylesheet"><script src="rotatex.js"></script></head><body><template id="section-content"><div><pre><code class="language-html source"></code></pre><div><div class="result"></div></div></div></template><template id="section-content-smartphone"><style>.smartphone {
+    }
+  </style>
+<link href="rotatex.css" rel="stylesheet"><script src="rotatex.js"></script></head>
+
+<body>
+  <template id="section-content">
+    <div class="content">
+      <pre>
+        <code class="source language-html"></code>
+      </pre>
+      
+      <div>
+        <div class="result"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="section-content-smartphone">
+    <style>
+      .smartphone {
         background-color: gray;
         width: 400px;
         aspect-ratio: 9/16;
@@ -83,11 +123,162 @@
         background-color: black;
         text-align: center;
         padding: 5px;
-      }</style><div><pre><code class="language-html source"></code></pre><div><div class="smartphone"><header>12:00</header><div class="result"></div></div></div></div></template><h1>Introduction</h1><section id="common-styles"><h3>Documentation</h3><div>Look at <a href="https://www.npmjs.com/package/@exnext/rotatex">npm</a> or <a href="https://github.com/exnext/rotatex">github</a></div><h3>NPM</h3><pre><code class="language-bash">npm install @exnext/rotatex</code></pre></section><section class="demo"><h3>Without usage rotatex library</h3><template><ul><li><span>Test 1</span></li><li><span>Test 2</span></li><li><span>Test 3</span></li><li><span>Test 4</span></li><li><span>Test 5</span></li><li><span>Test 6</span></li></ul></template></section><h1>Based only on rotatex.css</h1><section class="demo"><h3>Usage with css class</h3><template><ul class="rotatex"><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul></template></section><section class="demo"><h3>Usage with css variables</h3><template><ul class="rotatex"><li style="--angle: 0deg;"><span>Test 1</span></li><li style="--angle: 60deg;"><span>Test 2</span></li><li style="--angle: 120deg;"><span>Test 3</span></li><li style="--angle: 180deg;"><span>Test 4</span></li><li style="--angle: 240deg;"><span>Test 5</span></li><li style="--angle: 300deg;"><span>Test 6</span></li></ul></template></section><section class="demo"><h3>Excluded items</h3><template><style>.excluded-menu {
+      }
+    </style>
+
+    <div class="content">
+      <pre><code class="language-html source"></code></pre>
+      <div>
+        <div class="smartphone">
+          <header>12:00</header>
+          <div class="result"></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <h1>Introduction</h1>
+
+  <section id="common-styles">
+    <h3>Documentation</h3>
+    <div>Look at <a href="https://www.npmjs.com/package/@exnext/rotatex">npm</a> or <a
+        href="https://github.com/exnext/rotatex">github</a></div>
+
+    <h3>NPM</h3>
+    <pre><code class="language-bash">npm install @exnext/rotatex</code></pre>
+  </section>
+
+  <section class="demo">
+    <h3>Without usage rotatex library</h3>
+
+    <template>
+      <ul>
+        <li><span>Test 1</span></li>
+        <li><span>Test 2</span></li>
+        <li><span>Test 3</span></li>
+        <li><span>Test 4</span></li>
+        <li><span>Test 5</span></li>
+        <li><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <h1>Based only on rotatex.css</h1>
+
+  <section class="demo">
+    <h3>Usage with css class</h3>
+
+    <template>
+      <ul class="rotatex">
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Usage with css variables</h3>
+
+    <template>
+      <ul class="rotatex">
+        <li style="--angle: 0deg;"><span>Test 1</span></li>
+        <li style="--angle: 60deg;"><span>Test 2</span></li>
+        <li style="--angle: 120deg;"><span>Test 3</span></li>
+        <li style="--angle: 180deg;"><span>Test 4</span></li>
+        <li style="--angle: 240deg;"><span>Test 5</span></li>
+        <li style="--angle: 300deg;"><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Excluded items</h3>
+
+    <template>
+      <style>
+        .excluded-menu {
           font-weight: bold;
-        }</style><ul class="rotatex"><li class="r-off excluded-menu">Menu</li><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li style="--angle: 180deg;"><span>Test 4</span></li><li style="--angle: 240deg;"><span>Test 5</span></li><li style="--angle: 300deg;"><span>Test 6</span></li></ul></template></section><section class="demo"><h3>Left rotation animation</h3><template><ul class="rotatex rotatex-rotate rotatex-rotate__left"><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul></template></section><section class="demo"><h3>Right rotation animation</h3><template><ul class="rotatex rotatex-rotate rotatex-rotate__right"><li style="--angle: 0deg;"><span>Test 1</span></li><li style="--angle: 60deg;"><span>Test 2</span></li><li style="--angle: 120deg;"><span>Test 3</span></li><li style="--angle: 180deg;"><span>Test 4</span></li><li style="--angle: 240deg;"><span>Test 5</span></li><li style="--angle: 300deg;"><span>Test 6</span></li></ul></template></section><h1>Based on rotatex.css and rotatex.js</h1><section class="demo"><h3>Arranging elements</h3><template><ul id="static"><li><span>Test 1</span></li><li><span>Test 2</span></li><li><span>Test 3</span></li><li><span>Test 4</span></li><li><span>Test 5</span></li><li><span>Test 6</span></li></ul><script>(() => {
+        }
+      </style>
+
+      <ul class="rotatex">
+        <li class="r-off excluded-menu">Menu</li>
+
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li style="--angle: 180deg;"><span>Test 4</span></li>
+        <li style="--angle: 240deg;"><span>Test 5</span></li>
+        <li style="--angle: 300deg;"><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Left rotation animation</h3>
+
+    <template>
+      <ul class="rotatex rotatex-rotate rotatex-rotate__left">
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Right rotation animation</h3>
+
+    <template>
+      <ul class="rotatex rotatex-rotate rotatex-rotate__right">
+        <li style="--angle: 0deg;"><span>Test 1</span></li>
+        <li style="--angle: 60deg;"><span>Test 2</span></li>
+        <li style="--angle: 120deg;"><span>Test 3</span></li>
+        <li style="--angle: 180deg;"><span>Test 4</span></li>
+        <li style="--angle: 240deg;"><span>Test 5</span></li>
+        <li style="--angle: 300deg;"><span>Test 6</span></li>
+      </ul>
+    </template>
+  </section>
+
+  <h1>Based on rotatex.css and rotatex.js</h1>
+
+  <section class="demo">
+    <h3>Arranging elements</h3>
+
+    <template>
+      <ul id="static">
+        <li><span>Test 1</span></li>
+        <li><span>Test 2</span></li>
+        <li><span>Test 3</span></li>
+        <li><span>Test 4</span></li>
+        <li><span>Test 5</span></li>
+        <li><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#static');
-        })();</script></template></section><section class="demo"><h3>Creating dynamic menu</h3><template><ul id="dynamic"></ul><script>(() => {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Creating dynamic menu</h3>
+
+    <template>
+      <ul id="dynamic"></ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#dynamic');
 
           for (i = 1; i <= 10; i++) {
@@ -99,7 +290,19 @@
 
             rotatex.Element.appendChild(li);
           }
-        })();</script></template></section><section class="demo"><h3>Real time changing menu items</h3><template><ul id="interval"></ul><script>(() => {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Real time changing menu items</h3>
+
+    <template>
+      <ul id="interval"></ul>
+
+      <script>
+        (() => {
           let ul = document.getElementById('interval');
           let rotatex = new Rotatex(ul);
           let x = 1;
@@ -119,36 +322,162 @@
               }
             }
           }, 1000);
-        })();</script></template></section><section class="demo"><h3>Rotating by the mouse wheel or finger on the touch screen actions - clockwise</h3><template><ul class="rotatex" id="clockwise_action"><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul><script>(() => {
+        })();  
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Rotating by the mouse wheel or finger on the touch screen actions - clockwise</h3>
+
+    <template>
+      <ul class="rotatex" id="clockwise_action">
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#clockwise_action', { rotateByAngle: 10 });
-        })();</script></template></section><section class="demo"><h3>Rotating by the mouse wheel or finger on the touch screen actions - counterclockwise</h3><template><ul class="rotatex" id="counterclockwise_action"><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul><script>(() => {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Rotating by the mouse wheel or finger on the touch screen actions - counterclockwise</h3>
+
+    <template>
+      <ul class="rotatex" id="counterclockwise_action">
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#counterclockwise_action', { rotateByAngle: -10 });
-        })();</script></template></section><section class="demo"><h3>Rotating with limit by the mouse wheel or finger on the touch screen actions</h3><template><ul class="rotatex" id="limit_actions"><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul><script>(() => {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Rotating with limit by the mouse wheel or finger on the touch screen actions</h3>
+
+    <template>
+      <ul class="rotatex" id="limit_actions">
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#limit_actions', { rotateByAngle: 10, rotateLimit: 720 });
-        })();</script></template></section><section class="demo"><h3>Event for rotation actions</h3><template><style>.counter {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Event for rotation actions</h3>
+
+    <template>
+      <style>
+        .counter {
           font-weight: bold;
           font-size: 2rem;
-        }</style><ul class="rotatex" id="event"><li class="r-off counter">0</li><li class="r-0"><span>Test 1</span></li><li class="r-60"><span>Test 2</span></li><li class="r-120"><span>Test 3</span></li><li class="r-180"><span>Test 4</span></li><li class="r-240"><span>Test 5</span></li><li class="r-300"><span>Test 6</span></li></ul><script>(() => {
+        }
+      </style>
+
+      <ul class="rotatex" id="event">
+        <li class="r-off counter">0</li>
+        <li class="r-0"><span>Test 1</span></li>
+        <li class="r-60"><span>Test 2</span></li>
+        <li class="r-120"><span>Test 3</span></li>
+        <li class="r-180"><span>Test 4</span></li>
+        <li class="r-240"><span>Test 5</span></li>
+        <li class="r-300"><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let counter = document.querySelector('.r-off.counter');
           let rotatex = new Rotatex('#event', { rotateByAngle: 10, rotateLimit: 7200 });
 
           rotatex.on('rotate', (event) => {
             counter.innerText = Math.floor(event.mainOffsetAngle / 360);
           });
-        })();</script></template></section><section class="demo"><h3>Event for rotation actions with rotate method</h3><template><style>.label {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
+    <h3>Event for rotation actions with rotate method</h3>
+
+    <template>
+      <style>
+        .label {
           font-weight: bold;
         }
 
         #master {
           margin-bottom: 50px;
-        }</style><ul class="rotatex" id="master"><li class="r-off label">Master</li><li class="r-0"><span>Master 1</span></li><li class="r-60"><span>Master 2</span></li><li class="r-120"><span>Master 3</span></li><li class="r-180"><span>Master 4</span></li><li class="r-240"><span>Master 5</span></li><li class="r-300"><span>Master 6</span></li></ul><ul class="rotatex" id="slave"><li class="r-off label">Slave</li><li style="--angle: 0deg;"><span>Slave 1</span></li><li style="--angle: 60deg;"><span>Slave 2</span></li><li style="--angle: 120deg;"><span>Slave 3</span></li></ul><script>(() => {
+        }
+      </style>
+
+      <ul class="rotatex" id="master">
+        <li class="r-off label">Master</li>
+
+        <li class="r-0"><span>Master 1</span></li>
+        <li class="r-60"><span>Master 2</span></li>
+        <li class="r-120"><span>Master 3</span></li>
+        <li class="r-180"><span>Master 4</span></li>
+        <li class="r-240"><span>Master 5</span></li>
+        <li class="r-300"><span>Master 6</span></li>
+      </ul>
+
+      <ul class="rotatex" id="slave">
+        <li class="r-off label">Slave</li>
+
+        <li style="--angle: 0deg;"><span>Slave 1</span></li>
+        <li style="--angle: 60deg;"><span>Slave 2</span></li>
+        <li style="--angle: 120deg;"><span>Slave 3</span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex_master = new Rotatex('#master', { rotateByAngle: 10 });
           let rotatex_salve = new Rotatex('#slave');
 
           rotatex_master.on('rotate', (event) => {
             rotatex_salve.setRotation(event.mainOffsetAngle);
           });
-        })();</script></template></section><h1>Other examples</h1><section class="demo advanced" template="smartphone"><h3>Menu for smartphones for example</h3><template><style>#hamburger {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <h1>Other examples</h1>
+
+  <section class="demo advanced" template="smartphone">
+    <h3>Menu for smartphones for example</h3>
+
+    <template>
+      <style>
+        #hamburger {
           position: absolute;
           top: 10px;
           right: 10px;
@@ -181,9 +510,33 @@
           line-height: 40px;
           padding: 5px;
           border-radius: 50%;
-        }</style><ul id="hamburger"><li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li><li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li><li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li><li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li><li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li><li><span style="background-color: #FFCA28;"><i class="fa-solid fa-user"></i></span></li></ul><script>(() => {
+        }
+      </style>
+
+      <ul id="hamburger">
+        <li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li>
+
+        <li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li>
+        <li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li>
+        <li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li>
+        <li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li>
+        <li><span style="background-color: #FFCA28;"><i class="fa-solid fa-user"></i></span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#hamburger', { rotateByAngle: 10 });
-        })();</script></template></section><section class="demo advanced"><h3>Nested menu</h3><template><style>.submenu {
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo advanced">
+    <h3>Nested menu</h3>
+
+    <template>
+      <style>
+        .submenu {
           width: 50px;
           height: 50px;
           display: block;
@@ -217,10 +570,42 @@
           line-height: 40px;
           padding: 5px;
           border-radius: 50%;
-        }</style><ul id="nested"><li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li><li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li><li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li><li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li><li><ul class="submenu"><li class="r-off"><span style="background-color: #FFCA28;"><i class="fa-solid fa-bars"></i></span></li><li><span style="background-color: #FFC107;"><i class="fa-solid fa-user"></i></span></li><li><span style="background-color: #FFB300;"><i class="fa-solid fa-user-astronaut"></i></span></li><li><span style="background-color: #FFA000;"><i class="fa-solid fa-user-graduate"></i></span></li></ul></li><li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li></ul><script>(() => {
+        }
+      </style>
+
+      <ul id="nested">
+        <li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li>
+        <li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li>
+        <li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li>
+        <li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li>
+        <li>
+          <ul class="submenu">
+            <li class="r-off">
+              <span style="background-color: #FFCA28;">
+                <i class="fa-solid fa-bars"></i>
+              </span>
+            </li>
+
+            <li><span style="background-color: #FFC107;"><i class="fa-solid fa-user"></i></span></li>
+            <li><span style="background-color: #FFB300;"><i class="fa-solid fa-user-astronaut"></i></span></li>
+            <li><span style="background-color: #FFA000;"><i class="fa-solid fa-user-graduate"></i></span></li>
+          </ul>
+        </li>
+
+        <li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li>
+      </ul>
+
+      <script>
+        (() => {
           let rotatex = new Rotatex('#nested', { rotateByAngle: 10 });
           let rotatex_submenu = new Rotatex('.submenu', { rotateByAngle: 10 });
-        })();</script></template></section><script>const sectionTemplates = {};
+        })();
+      </script>
+    </template>
+  </section>
+
+  <script>
+    const sectionTemplates = {};
     document.querySelectorAll('template[id]')
       .forEach((template) => {
         sectionTemplates[template.id] = template;
@@ -232,8 +617,8 @@
       let template = section.querySelector('template');
 
       if (template) {
-        let templateId = ['section-content', section.getAttribute('template')].filter(x => x).join('-');
-        section.appendChild(sectionTemplates[templateId].content.cloneNode(true));
+        let sectionTemplateId = ['section-content', section.getAttribute('template')].filter(x => x).join('-');
+        section.appendChild(sectionTemplates[sectionTemplateId].content.cloneNode(true));
 
         let source = section.querySelector('.source');
         source.textContent = template.innerHTML;
@@ -243,4 +628,8 @@
       }
     }
 
-    hljs.highlightAll();</script></body></html>
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>
