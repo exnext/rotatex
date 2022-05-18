@@ -50,7 +50,7 @@
     "type": "git",
     "url": "git+https://github.com/exnext/rotatex.git"
   },
-  "keywords": [],
+  "keywords": ["rotatex", "rotate", "menu", "transform", "transformation"],
   "author": "",
   "license": "MIT",
   "bugs": {
