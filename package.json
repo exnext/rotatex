@@ -1,6 +1,6 @@
 {
   "name": "@exnext/rotatex",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/rotatex.js",
   "types": "dist/rotatex.d.ts",

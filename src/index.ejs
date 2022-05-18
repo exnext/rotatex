@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
+  <link rel="stylesheet" href="//unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css">
   <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/default.min.css">
   <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js"></script>
 
@@ -47,6 +48,15 @@
     section.demo>div>*:last-child {
       display: flex;
       justify-content: center;
+    }
+
+    .result {
+      position: relative;
+    }
+
+    .advanced ul {
+      background-color: transparent;
+      display: initial;
     }
   </style>
 
@@ -88,6 +98,42 @@
       <pre><code class="language-html source"></code></pre>
       <div>
         <div class="result"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="section-content-smartphone">
+    <style>
+      .smartphone {
+        background-color: gray;
+        width: 400px;
+        aspect-ratio: 9/16;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .smartphone>.result {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .smartphone header {
+        background-color: black;
+        text-align: center;
+        padding: 5px;
+      }
+    </style>
+
+    <div>
+      <pre><code class="language-html source"></code></pre>
+      <div>
+        <div class="smartphone">
+          <header>12:00</header>
+          <div class="result"></div>
+        </div>
       </div>
     </div>
   </template>
@@ -206,6 +252,27 @@
   <h1>Based on rotatex.css and rotatex.js</h1>
 
   <section class="demo">
+    <h3>Arranging elements</h3>
+
+    <template>
+      <ul id="static">
+        <li><span>Test 1</span></li>
+        <li><span>Test 2</span></li>
+        <li><span>Test 3</span></li>
+        <li><span>Test 4</span></li>
+        <li><span>Test 5</span></li>
+        <li><span>Test 6</span></li>
+      </ul>
+
+      <script>
+        (() => {
+          let rotatex = new Rotatex('#static');
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo">
     <h3>Creating dynamic menu</h3>
 
     <template>
@@ -213,16 +280,16 @@
 
       <script>
         (() => {
-          let ul = document.getElementById('dynamic');
-          let rotatex = new Rotatex(ul);
+          let rotatex = new Rotatex('#dynamic');
 
           for (i = 1; i <= 10; i++) {
-            let li = document.createElement('li');
             let span = document.createElement('span');
-
             span.innerText = 'Test ' + i;
+
+            let li = document.createElement('li');
             li.appendChild(span);
-            ul.appendChild(li);
+
+            rotatex.Element.appendChild(li);
           }
         })();
       </script>
@@ -242,13 +309,13 @@
           let x = 1;
 
           setInterval(function () {
-            let li = document.createElement('li');
             let span = document.createElement('span');
-
             span.innerText = 'Test ' + x++;
-            li.appendChild(span);
-            ul.appendChild(li);
 
+            let li = document.createElement('li');
+            li.appendChild(span);
+
+            ul.appendChild(li);
 
             if (ul.children.length >= 15) {
               for (let i = 0; i < Math.ceil(Math.random() * 5); i++) {
@@ -276,8 +343,7 @@
 
       <script>
         (() => {
-          let ul = document.getElementById('clockwise_action');
-          let rotatex = new Rotatex(ul, { rotateByAngle: 10 });
+          let rotatex = new Rotatex('#clockwise_action', { rotateByAngle: 10 });
         })();
       </script>
     </template>
@@ -298,8 +364,7 @@
 
       <script>
         (() => {
-          let ul = document.getElementById('counterclockwise_action');
-          let rotatex = new Rotatex(ul, { rotateByAngle: -10 });
+          let rotatex = new Rotatex('#counterclockwise_action', { rotateByAngle: -10 });
         })();
       </script>
     </template>
@@ -320,8 +385,7 @@
 
       <script>
         (() => {
-          let ul = document.getElementById('limit_actions');
-          let rotatex = new Rotatex(ul, { rotateByAngle: 10, rotateLimit: 720 });
+          let rotatex = new Rotatex('#limit_actions', { rotateByAngle: 10, rotateLimit: 720 });
         })();
       </script>
     </template>
@@ -350,9 +414,8 @@
 
       <script>
         (() => {
-          let ul = document.getElementById('event');
-          let counter = ul.querySelector('.r-off.counter');
-          let rotatex = new Rotatex(ul, { rotateByAngle: 10, rotateLimit: 7200 });
+          let counter = document.querySelector('.r-off.counter');
+          let rotatex = new Rotatex('#event', { rotateByAngle: 10, rotateLimit: 7200 });
 
           rotatex.on('rotate', (event) => {
             counter.innerText = Math.floor(event.mainOffsetAngle / 360);
@@ -397,11 +460,8 @@
 
       <script>
         (() => {
-          let ul_master = document.getElementById('master');
-          let rotatex_master = new Rotatex(ul_master, { rotateByAngle: 10 });
-
-          let ul_slave = document.getElementById('slave');
-          let rotatex_salve = new Rotatex(ul_slave);
+          let rotatex_master = new Rotatex('#master', { rotateByAngle: 10 });
+          let rotatex_salve = new Rotatex('#slave');
 
           rotatex_master.on('rotate', (event) => {
             rotatex_salve.setRotation(event.mainOffsetAngle);
@@ -411,15 +471,155 @@
     </template>
   </section>
 
+  <h1>Other examples</h1>
+
+  <section class="demo advanced" template="smartphone">
+    <h3>Menu for smartphones for example</h3>
+
+    <template>
+      <style>
+        #hamburger {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: block;
+          width: max-content;
+          font-size: 32px;
+        }
+
+        #hamburger>li {
+          cursor: pointer;
+        }
+
+        #hamburger>*:not(.r-off) {
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+
+        #hamburger:hover>*:not(.r-off) {
+          width: 200%;
+          height: 200%;
+          opacity: 1;
+        }
+
+        #hamburger span {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          line-height: 40px;
+          padding: 5px;
+          border-radius: 50%;
+        }
+      </style>
+
+      <ul id="hamburger">
+        <li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li>
+
+        <li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li>
+        <li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li>
+        <li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li>
+        <li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li>
+        <li><span style="background-color: #FFCA28;"><i class="fa-solid fa-user"></i></span></li>
+      </ul>
+
+      <script>
+        (() => {
+          let rotatex = new Rotatex('#hamburger', { rotateByAngle: 10 });
+        })();
+      </script>
+    </template>
+  </section>
+
+  <section class="demo advanced">
+    <h3>Nested menu</h3>
+
+    <template>
+      <style>
+        .submenu {
+          width: 50px;
+          height: 50px;
+          display: block;
+        }
+
+        #nested>li,
+        .submenu>li {
+          cursor: pointer;
+        }
+
+        #nested>*:not(.r-off),
+        .submenu>*:not(.r-off) {
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+
+        #nested:hover>*:not(.r-off),
+        .submenu:hover>*:not(.r-off) {
+          width: 200%;
+          height: 200%;
+          opacity: 1;
+        }
+
+        #nested span {
+          font-size: 32px;
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          line-height: 40px;
+          padding: 5px;
+          border-radius: 50%;
+        }
+      </style>
+
+      <ul id="nested">
+        <li><span style="background-color: #EF5350;"><i class="fa-solid fa-house"></i></span></li>
+        <li><span style="background-color: #AB47BC;"><i class="fa-solid fa-chart-pie"></i></span></li>
+        <li><span style="background-color: #4FC3F7;"><i class="fa-brands fa-facebook"></i></span></li>
+        <li><span style="background-color: #9CCC65;"><i class="fa-solid fa-envelope"></i></span></li>
+        <li>
+          <ul class="submenu">
+            <li class="r-off">
+              <span style="background-color: #FFCA28;">
+                <i class="fa-solid fa-bars"></i>
+              </span>
+            </li>
+
+            <li><span style="background-color: #FFC107;"><i class="fa-solid fa-user"></i></span></li>
+            <li><span style="background-color: #FFB300;"><i class="fa-solid fa-user-astronaut"></i></span></li>
+            <li><span style="background-color: #FFA000;"><i class="fa-solid fa-user-graduate"></i></span></li>
+          </ul>
+        </li>
+
+        <li class="r-off"><span><i class="fa-solid fa-bars"></i></span></li>
+      </ul>
+
+      <script>
+        (() => {
+          let rotatex = new Rotatex('#nested', { rotateByAngle: 10 });
+          let rotatex_submenu = new Rotatex('.submenu', { rotateByAngle: 10 });
+        })();
+      </script>
+    </template>
+  </section>
+
   <script>
-    const sectionContent = document.querySelector('template#section-content');
+    const sectionTemplates = {};
+    document.querySelectorAll('template[id]')
+      .forEach((template) => {
+        sectionTemplates[template.id] = template;
+      });
+
     const sections = document.querySelectorAll('section.demo');
 
     for (let section of sections) {
       let template = section.querySelector('template');
 
       if (template) {
-        section.appendChild(sectionContent.content.cloneNode(true));
+        let templateId = ['section-content', section.getAttribute('template')].filter(x => x).join('-');
+        section.appendChild(sectionTemplates[templateId].content.cloneNode(true));
 
         let source = section.querySelector('.source');
         source.textContent = template.innerHTML;
