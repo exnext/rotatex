@@ -95,7 +95,6 @@ module.exports = {
             template: "./src/index.ejs",
             scriptLoading: "blocking",
             inject: "head",
-            publicPath: "./",
             templateParameters: {
                 name: package.name,
                 version: package.version
