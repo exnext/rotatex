@@ -4,9 +4,7 @@ Library to make circular menu, list, etc. (...and everything what you want)
 
 ## Live demo
 
-Before reading the text below, first take a look at the live demo and see if it is interesting for you.
-
-[Live demo](https://exnext.github.io/rotatex/demo/)
+[Live demo](https://exnext.github.io/rotatex/dist/)
 
 ## NPM
 
@@ -99,29 +97,28 @@ This is simple usage of `Rotatex` javascript class. You haven't to set css `rota
 <ul id="dynamic"></ul>
 
 <script>
-    let ul = document.getElementById('dynamic');
-    let rotatex = new Rotatex(ul);
+    let rotatex = new Rotatex('#dynamic');
 
-    /* It is my example for list, you may create more difficult */
     for (i = 1; i <= 10; i++) {
-      let li = document.createElement('li');
-      let span = document.createElement('span');
+    let span = document.createElement('span');
+    span.innerText = 'Test ' + i;
 
-      span.innerText = 'Test ' + i;
-      li.appendChild(span);
-      ul.appendChild(li);
-    }    
+    let li = document.createElement('li');
+    li.appendChild(span);
+
+    rotatex.Element.appendChild(li);
+    } 
 </script>
 ```
 
 ## Constructor
 
-* element - main element using rotatex library
+* element - main element using rotatex library. It should be an `HTMLElement` object or a valid CSS selector string
 * options - few options described below
 
 ```typescript 
 class Rotatex {
-    constructor(element: HTMLElement, options?: RotatexOptions | undefined);
+    constructor(element: HTMLElement | string, options?: RotatexOptions | undefined);
 }
 
 interface RotatexOptions {

@@ -19,28 +19,23 @@ export interface RotateDataEvent {
 export class Rotatex extends Eventex {
     private static readonly ObserverOptions: MutationObserverInit = { attributes: false, childList: true, subtree: false };
     private mainOffsetAngle: number = 0;
+    private element!: HTMLElement;
 
     private observer: MutationObserver = new MutationObserver(() => {
         this.build();
     });
 
-    private build() {
-        this.element.classList.add('rotatex');
-        let children: NodeListOf<HTMLElement> = this.element.querySelectorAll(':scope > *:not(.r-off)');
-        let angle: number = 360 / children.length;
-
-        children.forEach((child: HTMLElement, idx: number) => {
-            let deg = Math.round(angle * idx);
-            child.style.setProperty('--angle', deg + 'deg');
-        });
-    }
-
-    constructor(private element: HTMLElement, private options?: RotatexOptions) {
+    constructor(element: HTMLElement | string, private options?: RotatexOptions) {
         super();
 
+        this.element = typeof element === 'string' ?
+            <HTMLElement>document.querySelector(element) :
+            element;
+
         if (options?.rotateByAngle) {
-            element.addEventListener('wheel', (event: WheelEvent) => {
+            this.Element.addEventListener('wheel', (event: WheelEvent) => {
                 event.preventDefault();
+                event.stopPropagation();
 
                 let delta: number = 0, { deltaY, deltaX } = event;
 
@@ -54,8 +49,9 @@ export class Rotatex extends Eventex {
             });
 
             let lastClientY = 0, lastClientX = 0;
-            element.addEventListener('touchmove', (event: TouchEvent) => {
+            this.Element.addEventListener('touchmove', (event: TouchEvent) => {
                 event.preventDefault();
+                event.stopPropagation();
 
                 let delta: number = 0,
                     deltaY: number = event.touches[0].clientY - lastClientY,
@@ -74,8 +70,19 @@ export class Rotatex extends Eventex {
             });
         }
 
-        this.observer.observe(element, Rotatex.ObserverOptions);
+        this.observer.observe(this.Element, Rotatex.ObserverOptions);
         this.build();
+    }
+
+    private build() {
+        this.Element.classList.add('rotatex');
+        let children: NodeListOf<HTMLElement> = this.Element.querySelectorAll(':scope > *:not(.r-off)');
+        let angle: number = 360 / children.length;
+
+        children.forEach((child: HTMLElement, idx: number) => {
+            let deg = Math.round(angle * idx);
+            child.style.setProperty('--angle', deg + 'deg');
+        });
     }
 
     get Element(): HTMLElement {
@@ -89,7 +96,7 @@ export class Rotatex extends Eventex {
     rotate(delta: number) {
         this.mainOffsetAngle += delta;
         this.fixRotateLimit(delta);
-        this.element.style.setProperty('--main-offset-angle', this.mainOffsetAngle + 'deg');
+        this.Element.style.setProperty('--main-offset-angle', this.mainOffsetAngle + 'deg');
 
         if (delta) {
             this.dispatchEvent();
@@ -113,7 +120,7 @@ export class Rotatex extends Eventex {
     getChildrenDetails() {
         let data: RotateChild[] = [];
 
-        let children: NodeListOf<HTMLElement> = this.element.querySelectorAll(':scope > *:not(.r-off)');
+        let children: NodeListOf<HTMLElement> = this.Element.querySelectorAll(':scope > *:not(.r-off)');
 
         children.forEach((element: HTMLElement, idx: number) => {
             let compStyles = window.getComputedStyle(element);
