@@ -1,6 +1,6 @@
 {
   "name": "@exnext/rotatex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "dist/rotatex.js",
   "types": "dist/rotatex.d.ts",
@@ -50,7 +50,13 @@
     "type": "git",
     "url": "git+https://github.com/exnext/rotatex.git"
   },
-  "keywords": ["rotatex", "rotate", "menu", "transform", "transformation"],
+  "keywords": [
+    "rotatex",
+    "rotate",
+    "menu",
+    "transform",
+    "transformation"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -70,6 +76,6 @@
     ]
   },
   "dependencies": {
-    "@exnext/eventex": "^1.0.0"
+    "@exnext/eventex": "^1.0.2"
   }
 }
